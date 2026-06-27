@@ -487,6 +487,21 @@ elif page == "Analisis Spasial & Statistik":
     st.markdown('<div class="title-text">🗺️ Analisis Spasial Dataset</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle-text">Menampilkan sebaran jumlah file dan analisis kualitas sinyal berdasarkan data spasial Arah (Barat, Selatan, Timur, Utara) serta Jarak (2km, 4km, 6km, 8km, 10km).</div>', unsafe_allow_html=True)
     
+    # Full dataset download button
+    report_path = Path(__file__).parent / 'hasil_analisis_keseluruhan.csv'
+    if report_path.exists():
+        with open(report_path, mode='rb') as f:
+            csv_bytes = f.read()
+        st.info("📊 **Laporan Analisis Keseluruhan Dataset (3,234 Gambar)** telah tersedia!")
+        st.download_button(
+            label="📥 Unduh Laporan Keseluruhan Dataset (CSV)",
+            data=csv_bytes,
+            file_name="hasil_analisis_keseluruhan.csv",
+            mime="text/csv",
+            key="download_full_report"
+        )
+        st.markdown("---")
+        
     # Dataset Folder Scan
     dataset_root = Path(__file__).parent / 'DATASET_GAMBAR'
     
