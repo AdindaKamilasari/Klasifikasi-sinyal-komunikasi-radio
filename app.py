@@ -488,7 +488,7 @@ elif page == "Analisis Spasial & Statistik":
     st.markdown('<div class="subtitle-text">Menampilkan sebaran jumlah file dan analisis kualitas sinyal berdasarkan data spasial Arah (Barat, Selatan, Timur, Utara) serta Jarak (2km, 4km, 6km, 8km, 10km).</div>', unsafe_allow_html=True)
     
     # Dataset Folder Scan
-    dataset_root = Path(r'c:\TA BARUUUUUUU\DATASET_GAMBAR')
+    dataset_root = Path(__file__).parent / 'DATASET_GAMBAR'
     
     if not dataset_root.exists():
         st.error("Folder DATASET_GAMBAR tidak ditemukan di direktori proyek.")
