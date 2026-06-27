@@ -615,7 +615,7 @@ elif page == "Analisis Spasial & Statistik":
                         # Process first image in 1. FM (representing FM) if available
                         fm_sub = fm_path / '1. FM'
                         if fm_sub.exists():
-                            images = list(fm_sub.glob('*.jpg'))
+                            images = sorted(list(fm_sub.glob('*.jpg')))
                             if images:
                                 # Pick 1 sample image
                                 try:
@@ -641,8 +641,18 @@ elif page == "Analisis Spasial & Statistik":
                                             'Recommendation': recom['type'],
                                             'Type': 'FM'
                                         })
-                                except Exception:
-                                    pass
+                                except Exception as e:
+                                    import sys
+                                    print(f"Error analyzing {images[0].name}: {e}", file=sys.stderr)
+                                    recom = get_amplifier_recommendation('FM', -90.0, None)
+                                    results.append({
+                                        'Arah': direction,
+                                        'Jarak': dist,
+                                        'SNR': 0.0,
+                                        'Quality': 'Error during analysis',
+                                        'Recommendation': recom['type'],
+                                        'Type': 'FM'
+                                    })
                 
                 if results:
                     df_res = pd.DataFrame(results)
