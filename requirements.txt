@@ -1,0 +1,9 @@
+streamlit
+opencv-python-headless
+numpy
+pandas
+pytesseract
+scikit-learn
+scipy
+matplotlib
+seaborn
