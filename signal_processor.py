@@ -61,8 +61,8 @@ def detect_spectrum_panel(img_bgr):
     gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
     dark = gray < 80
     
-    # If the image is already cropped to just the dark spectrum (dark pixels > 70%), return full dimensions
-    if dark.mean() > 0.70:
+    # If the image is already cropped to just the dark spectrum (dark pixels > 85%), return full dimensions
+    if dark.mean() > 0.85:
         return (0, 0, w, h)
         
     row_frac = dark[:, :int(w * 0.82)].mean(axis=1)
@@ -128,13 +128,16 @@ def estimate_tick_step(vals):
     diffs = []
     for a, b in zip(vals, vals[1:]):
         d = abs(a - b)
-        if 3 <= d <= 20:
+        if 3 <= d <= 25:
             d5 = int(round(d / 5) * 5)
-            if d5 in (5, 10, 15, 20): 
+            if d5 in (5, 10, 15, 20, 25): 
                 diffs.append(d5)
     if diffs: 
-        return 5 if 5 in diffs else min(diffs)
-    return 5
+        m = min(diffs)
+        if m in (5, 10):
+            return m
+        return 10
+    return 10
 
 def detect_grid_axis_y(img_bgr, panel):
     x0, y0, x1, y1 = panel

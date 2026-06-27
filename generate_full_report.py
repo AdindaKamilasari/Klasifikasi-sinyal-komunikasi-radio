@@ -78,19 +78,9 @@ def process_image(img_path):
             predicted_type = pred_class
             rec = get_amplifier_rec_type(predicted_type, sig['peak_db'], sig['snr_db'])
         else:
-            predicted_type = "Tidak Terdeteksi"
-            predicted_peak = None
-            noise_floor = res.get('noise_floor', -50.0)
-            snr = 0.0
-            condition = "Not detected"
-            rec = "Tidak Terdeteksi (N/A)"
+            return None
     except Exception:
-        predicted_type = "Error"
-        predicted_peak = None
-        noise_floor = -50.0
-        snr = 0.0
-        condition = "Error"
-        rec = "Error"
+        return None
         
     return {
         'image_name': image_name,
@@ -130,7 +120,8 @@ def main():
         for future in as_completed(futures):
             try:
                 data = future.result()
-                results.append(data)
+                if data is not None:
+                    results.append(data)
             except Exception as e:
                 path = futures[future]
                 print(f"Failed to process {path.name}: {e}")
