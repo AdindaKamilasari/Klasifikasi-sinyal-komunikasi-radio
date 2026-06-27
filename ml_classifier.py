@@ -29,7 +29,7 @@ def extract_image_features(image_path):
         pass
     return None, False
 
-def build_and_train_model(dataset_root=None, max_samples_per_class=25):
+def build_and_train_model(dataset_root=None, max_samples_per_class=150):
     """
     Scan a subset of images from DATASET_GAMBAR:
     - 1. FM folder -> label 'FM'
